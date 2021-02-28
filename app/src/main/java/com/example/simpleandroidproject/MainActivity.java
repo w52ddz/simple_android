@@ -1,58 +1,51 @@
 package com.example.simpleandroidproject;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
 
-    // 设置count变量
-    private int count;
-    // 定义全局变量保存textView
-    private TextView mTextView;
+public class MainActivity extends AppCompatActivity {
+
+    private ListView listViewLv;
+    private List<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+        setView();
+    }
 
-        // 文本容器
-//        TextView textView = findViewById(R.id.content_text);
-        mTextView = findViewById(R.id.content_text);
-        // 按钮
-        Button btnAdd = findViewById(R.id.btn_add);
-        Button btnSub = findViewById(R.id.btn_sub);
-
-        btnAdd.setOnClickListener(this);
-        btnSub.setOnClickListener(this);
-//        btnAdd.setOnClickListener(new View.OnClickListener() {
+    private void setView() {
+        // 绑定点击事件
+//        listViewLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//                Log.d("点击", "点击了按钮");
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
 //            }
 //        });
-
-        // 使用Java8语法设置事件监听，只有一个点击事件时使用
-//        btnAdd.setOnClickListener((v) -> {
-//            count++;
-//            textView.setText(String.valueOf(count));
-//        });
+        listViewLv.setOnItemClickListener((parent, view, position, id) ->
+            Toast.makeText(getApplicationContext(), ""+list.get(position), Toast.LENGTH_SHORT).show()
+        );
     }
 
-    // mac快速生成代码 option + enter
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_add:
-                count++;
-                break;
-            case R.id.btn_sub:
-                count--;
-                break;
-        }
-        mTextView.setText(String.valueOf(count));
+    public void initView() {
+        listViewLv = findViewById(R.id.list_view_lv);
+        list = new ArrayList<>();
+        list.add("数据1");
+        list.add("数据2");
+        list.add("数据3");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+            getApplicationContext(), android.R.layout.simple_expandable_list_item_1, list
+        );
+        listViewLv.setAdapter(arrayAdapter);
     }
 }
+
