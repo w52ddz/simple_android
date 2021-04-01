@@ -20,7 +20,9 @@ public class LayoutsTest extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // 使用的布局错误会导致页面不能正确跳转
+//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_layouts_test);
 
         // 文本容器
 //        TextView textView = findViewById(R.id.content_text);
